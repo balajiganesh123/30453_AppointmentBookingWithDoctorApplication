@@ -1,0 +1,22 @@
+<h3>Browse Doctors</h3>
+<div class="filters">
+  <div>
+    <label>Specialization</label>
+    <select [formControl]="f.controls['specialization']" (change)="search()">
+      <option value="">All</option>
+      <option *ngFor="let s of specializations" [value]="s">{{ s }}</option>
+    </select>
+  </div>
+  <button type="button" class="btn btn-secondary" (click)="search()">
+    Search
+  </button>
+</div>
+
+<div class="grid">
+  <div class="card" *ngFor="let d of doctors">
+    <div>{{ d.user.name }}</div>
+    <div>{{ d.specialization }} • {{ d.experienceYears }} years</div>
+    <div>{{ d.city }} • {{ d.clinicLocation }}</div>
+    <a [routerLink]="['/doctors', d.id]">View</a>
+  </div>
+</div>

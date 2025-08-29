@@ -1,0 +1,35 @@
+<div style="min-height:70vh; display:flex; justify-content:flex-start;">
+  <div>
+    <h2 style="text-align:left;">Login</h2>
+    <form [formGroup]="f" (ngSubmit)="submit()" style="display:flex; flex-direction:column; align-items:flex-start;">
+      <div style="margin-bottom:12px;">
+        <input
+          formControlName="email"
+          type="email"
+          placeholder="Email"
+          autocomplete="email"
+          style="padding:10px 12px; font-size:14px; width:280px;" />
+      </div>
+
+      <div>
+        <input
+          formControlName="password"
+          type="password"
+          placeholder="Password"
+          autocomplete="current-password"
+          style="padding:10px 12px; font-size:14px; width:280px;" />
+      </div>
+
+      <br>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="f.invalid || f.pending">
+        Log in
+      </button>
+
+      <div *ngIf="error" style="margin-top:8px;">{{ error }}</div>
+    </form>
+  </div>
+</div>

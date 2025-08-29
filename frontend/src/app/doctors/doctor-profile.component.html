@@ -1,0 +1,44 @@
+<h2 style="margin:0 0 4px 0;">{{ doctor?.user?.name }}</h2>
+<div style="margin:0 0 12px 0; color:#555;">{{ doctor?.specialization }}</div>
+
+<div style="display:flex; gap:8px; align-items:center; margin-bottom:12px; flex-wrap:wrap;">
+  <input type="date" [(ngModel)]="date" [attr.min]="todayStr" style="padding:8px; font-size:14px;" />
+  <button type="button" class="btn btn-outline btn-sm" (click)="findSlots()">Find slots</button>
+  <button type="button" class="btn btn-outline btn-sm" (click)="loadAllAvailableSlots()">All Available Slots</button>
+</div>
+
+<div *ngIf="loadingAll" style="margin:8px 0;">Loading...</div>
+
+<table *ngIf="!loadingAll && allSlots.length" style="width:100%; border-collapse:collapse; margin-bottom:16px;">
+  <thead>
+    <tr>
+      <th style="text-align:left; border-bottom:1px solid #ddd; padding:8px;">Date</th>
+      <th style="text-align:left; border-bottom:1px solid #ddd; padding:8px;">Slot Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of allSlots">
+      <td style="border-bottom:1px solid #eee; padding:8px;">{{ r.date }}</td>
+      <td style="border-bottom:1px solid #eee; padding:8px;">{{ r.time }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="slots.length === 0" style="margin:8px 0;">No slots for selected date.</div>
+
+<div *ngFor="let s of slots; trackBy: trackSlot" style="border:1px solid #ddd; border-radius:8px; padding:10px; margin-bottom:8px;">
+  <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+    <div>
+      <div style="font-weight:600;">{{ s.startUtc | date:'mediumDate' }}</div>
+      <div>{{ s.startUtc | date:'shortTime' }}</div>
+    </div>
+
+    <form [formGroup]="fgs[s.startUtc]" (ngSubmit)="book(s)" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+      <input formControlName="reason" placeholder="Reason" style="padding:8px; font-size:14px; width:180px;" />
+      <input formControlName="notes" placeholder="Notes" style="padding:8px; font-size:14px; width:220px;" />
+      <button type="submit" class="btn btn-primary btn-sm" [disabled]="submitting[s.startUtc]">
+        {{ submitting[s.startUtc] ? 'Booking...' : 'Book' }}
+      </button>
+    </form>
+  </div>
+</div>

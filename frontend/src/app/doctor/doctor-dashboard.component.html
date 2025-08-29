@@ -1,0 +1,59 @@
+<h2>Doctor Dashboard</h2>
+<div style="display:grid; grid-template-columns: 140px 1fr; column-gap:12px; row-gap:8px; margin-bottom:16px;">
+  <div>Doctor Name</div><div>: {{ doctor?.user?.name }}</div>
+  <div>Specialization</div><div>: {{ doctor?.specialization }}</div>
+</div>
+
+<div style="display:flex; gap:8px; margin-bottom:16px;">
+  <button type="button" class="btn btn-outline btn-sm" (click)="activeTab='appointments'">Appointments</button>
+  <button type="button" class="btn btn-outline btn-sm" (click)="activeTab='schedule'">Add Schedule</button>
+</div>
+
+<ng-container *ngIf="activeTab==='appointments'">
+  <div style="margin-bottom:12px;">
+    <button type="button" class="btn btn-outline btn-sm" (click)="showAll=false; load()" style="margin-right:8px">Show upcoming</button>
+    <button type="button" class="btn btn-outline btn-sm" (click)="showAll=true; load()">Show all</button>
+  </div>
+
+  <table border="1" cellspacing="0" cellpadding="8" style="width:100%; max-width:880px">
+    <thead>
+      <tr>
+        <th>Patient Name</th>
+        <th>Date</th>
+        <th>Slot Time</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of items">
+        <td>{{ a.patient?.user?.name }}</td>
+        <td>{{ a.startTime | date:'dd-MM-yyyy' }}</td>
+        <td>{{ a.startTime | date:'shortTime' }} - {{ a.endTime | date:'shortTime' }}</td>
+        <td>
+          <ng-container [ngSwitch]="a.status">
+            <button *ngSwitchCase="'PENDING'" type="button" class="btn btn-primary btn-sm" (click)="accept(a)">Accept</button>
+            <span *ngSwitchCase="'CONFIRMED'">Confirmed</span>
+            <span *ngSwitchCase="'CANCELLED'">Cancelled</span>
+            <span *ngSwitchDefault>{{ a.status }}</span>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>
+
+<ng-container *ngIf="activeTab==='schedule'">
+  <h3>Add Schedule</h3>
+  <div *ngIf="success" class="card">{{ success }}</div>
+  <div *ngIf="error" class="card">{{ error }}</div>
+
+  <form [formGroup]="f" (ngSubmit)="addSchedule()">
+    <input type="date" formControlName="date" [attr.min]="todayStr" />
+    <input type="time" formControlName="start" [attr.min]="timeMin" />
+    <input type="time" formControlName="end" [attr.min]="timeMin" />
+    <button type="submit" class="btn btn-primary" [disabled]="loading || f.invalid || pastSelection || invalidRange">Add</button>
+  </form>
+
+  <div *ngIf="pastSelection" style="margin-top:8px; color:#b00020;">Cannot add availability in the past</div>
+  <div *ngIf="invalidRange" style="margin-top:4px; color:#b00020;">Start time must be earlier than end time</div>
+</ng-container>

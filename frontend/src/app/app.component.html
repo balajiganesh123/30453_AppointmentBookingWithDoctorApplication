@@ -1,0 +1,23 @@
+
+<div class="header">
+  <div class="container">
+    <nav style="display:flex; justify-content:left;">
+      <a routerLink="/">Home</a>
+
+      <ng-container *ngIf="!isLoggedIn">
+        <a routerLink="/login">Login</a>
+        <a routerLink="/register/patient">Patient Register</a>
+        <a routerLink="/register/doctor">Doctor Register</a>
+      </ng-container>
+
+      <ng-container *ngIf="isLoggedIn">
+        <a [routerLink]="userLink()">User</a>
+        <a href="#" (click)="signOut($event)">Sign out</a>
+      </ng-container>
+    </nav>
+  </div>
+</div>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

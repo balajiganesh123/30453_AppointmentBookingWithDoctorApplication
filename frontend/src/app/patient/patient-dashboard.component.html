@@ -1,0 +1,29 @@
+<h2>Patient Dashboard</h2>
+<div style="display:grid; grid-template-columns: 140px 1fr; column-gap:12px; row-gap:8px; margin-bottom:16px;">
+  <div>Patient Name</div><div>: {{ patient?.name }}</div>
+  <div>Email</div><div>: {{ patient?.email }}</div>
+</div>
+
+<table border="1" cellspacing="0" cellpadding="8" style="width:100%; max-width:880px">
+  <thead>
+    <tr>
+      <th>Doctor Name</th>
+      <th>Date</th>
+      <th>Slot Time</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let a of items">
+      <td>{{ a.doctor?.user?.name }}</td>
+      <td>{{ a.startTime | date:'dd-MM-yyyy' }}</td>
+      <td>{{ a.startTime | date:'shortTime' }} - {{ a.endTime | date:'shortTime' }}</td>
+      <td>
+        <button *ngIf="a.status==='PENDING'" type="button" class="btn btn-outline-danger btn-sm" (click)="cancel(a)">Cancel</button>
+        <span *ngIf="a.status==='CONFIRMED'">Confirmed</span>
+        <span *ngIf="a.status==='CANCELLED'">Cancelled</span>
+        <span *ngIf="a.status!=='PENDING' && a.status!=='CONFIRMED' && a.status!=='CANCELLED'">{{ a.status }}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>

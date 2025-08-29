@@ -1,0 +1,39 @@
+<h2>Patient Register</h2>
+<form [formGroup]="f" (ngSubmit)="submit()">
+  <div style="display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
+    <div style="display:flex; flex-direction:column;">
+      <input formControlName="name" placeholder="Name" autocomplete="name" style="padding:10px 12px; font-size:14px; width:280px;" />
+      <div *ngIf="f.get('name')?.touched && f.get('name')?.invalid" style="color:#b00020; font-size:12px; margin-top:4px;">Name can only contain letters and spaces.</div>
+    </div>
+    <div style="display:flex; flex-direction:column;">
+      <input formControlName="age" type="number" min="1" max="100" placeholder="Age" style="padding:10px 12px; font-size:14px; width:280px;" />
+      <div *ngIf="f.get('age')?.touched && f.get('age')?.invalid" style="color:#b00020; font-size:12px; margin-top:4px;">Age must be 1–100.</div>
+    </div>
+  </div>
+
+  <div style="display:flex; gap:12px; margin-bottom:12px; flex-wrap:wrap;">
+    <div style="display:flex; flex-direction:column;">
+      <input formControlName="phone" type="tel" placeholder="Phone" inputmode="numeric" pattern="\d{10}" style="padding:10px 12px; font-size:14px; width:280px;" />
+      <div *ngIf="f.get('phone')?.touched && f.get('phone')?.invalid" style="color:#b00020; font-size:12px; margin-top:4px;">Phone must be exactly 10 digits.</div>
+    </div>
+    <select formControlName="gender" style="padding:10px 12px; font-size:14px; width:280px;">
+      <option value="">Select Gender</option>
+      <option value="MALE">Male</option>
+      <option value="FEMALE">Female</option>
+      <option value="OTHER">Other</option>
+    </select>
+  </div>
+
+  <div style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
+    <div style="display:flex; flex-direction:column;">
+      <input formControlName="email" type="email" placeholder="Email" autocomplete="email" style="padding:10px 12px; font-size:14px; width:280px;" />
+      <div *ngIf="f.get('email')?.touched && f.get('email')?.invalid" style="color:#b00020; font-size:12px; margin-top:4px;">Email must be user.name@example.com with letters, numbers, and dots only.</div>
+    </div>
+    <div style="display:flex; flex-direction:column;">
+      <input formControlName="password" type="password" placeholder="Password" autocomplete="new-password" style="padding:10px 12px; font-size:14px; width:280px;" />
+      <div *ngIf="f.get('password')?.touched && f.get('password')?.invalid" style="color:#b00020; font-size:12px; margin-top:4px;">Password is required.</div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="f.invalid || f.pending">Register</button>
+</form>

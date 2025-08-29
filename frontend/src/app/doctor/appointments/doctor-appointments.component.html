@@ -1,0 +1,33 @@
+<div>
+  <div style="margin-bottom:12px">
+    <button type="button" (click)="showAll=false; load()" style="margin-right:8px">Show upcoming</button>
+    <button type="button" (click)="showAll=true; load()">Show all</button>
+  </div>
+
+  <table border="1" cellspacing="0" cellpadding="8" style="width:100%; max-width:880px">
+    <thead>
+      <tr>
+        <th>Patient Name</th>
+        <th>Date</th>
+        <th>Slot Time</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of items">
+        <td>{{ a.patient?.user?.name }}</td>
+        <td>{{ a.startTime | date:'mediumDate' }}</td>
+        <td>{{ a.startTime | date:'shortTime' }} - {{ a.endTime | date:'shortTime' }}</td>
+        <td>
+          <ng-container [ngSwitch]="a.status">
+            <button *ngSwitchCase="'PENDING'" type="button" (click)="accept(a)">Accept</button>
+            <button *ngSwitchCase="'ACCEPTED'" type="button" (click)="complete(a)">Mark as Completed</button>
+            <span *ngSwitchCase="'COMPLETED'">Completed</span>
+            <span *ngSwitchCase="'CANCELLED'">Cancelled</span>
+            <span *ngSwitchDefault>{{ a.status }}</span>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

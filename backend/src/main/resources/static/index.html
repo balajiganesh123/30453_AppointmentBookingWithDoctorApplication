@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Doctor App Backend</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Roboto font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+      :root { --card-max: 640px; }
+      body { font-family: 'Roboto', system-ui, Arial, sans-serif; margin: 2rem; }
+      .card { max-width: var(--card-max); border: 1px solid #ddd; border-radius: 12px; padding: 16px; }
+      h1 { margin: 0 0 .5rem 0; font-size: 1.4rem; font-weight: 700; }
+      p { margin: .5rem 0; }
+      a { display: inline-block; margin-right: 12px; text-decoration: none; font-weight: 500; }
+      a:hover { text-decoration: underline; }
+      .links { margin-top: .25rem; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Backend is running ✅</h1>
+
+      <p class="links">
+        <!-- Home page of your app (Frontend on port 80) -->
+        <a href="http://localhost/" target="_blank">Home Page of Appointment Booking with Doctor Application</a>
+      </p>
+
+      <p>Quick checks:</p>
+      <p class="links">
+        <a href="/api/patients" target="_blank">/api/patients</a>
+        <a href="/api/doctors" target="_blank">/api/doctors</a>
+        <a href="/api/doctors/specializations" target="_blank">/api/doctors/specializations</a>
+      </p>
+    </div>
+  </body>
+</html>
